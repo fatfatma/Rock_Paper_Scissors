@@ -1,30 +1,54 @@
 import random
-secenek=["taş","kağıt","makas"]
-taş=secenek[0]
-kağıt=secenek[1]
-makas=secenek[2]
-print("Oyununa hoş geldiniz.")
-while True:
-    secim = input("Taş mı kağıt mı makas mı? ")
-    bil_secim = random.choice(secenek)
-    if secim==taş:
-        if bil_secim==taş:
-            print("Bilgisayarın seçimi: Taş Sonuç: Berabere")
-        elif bil_secim==kağıt:
-            print("Bilgisayarın seçimi: Kağıt Kaybettiniz")
+import tkinter as tk
+from tkinter import messagebox
+
+options = ["rock", "paper", "scissors"]
+rock = options[0]
+paper = options[1]
+scissors = options[2]
+
+def play(user_choice):
+    computer_choice = random.choice(options)
+    result = ""
+
+    if user_choice == rock:
+        if computer_choice == rock:
+            result = "Computer chose: Rock\nResult: Draw"
+        elif computer_choice == paper:
+            result = "Computer chose: Paper\nYou lost"
         else:
-            print("Bilgisayarın seçimi: makas Sonuç:Kazandınız")
-    if secim==kağıt:
-        if bil_secim==taş:
-            print("Bilgisayarın seçimi: Taş Sonuç: Kazandınız")
-        elif bil_secim==kağıt:
-            print("Bilgisayarın seçimi: Kağıt Sonuç: Berabere")
+            result = "Computer chose: Scissors\nYou won"
+    if user_choice == paper:
+        if computer_choice == rock:
+            result = "Computer chose: Rock\nYou won"
+        elif computer_choice == paper:
+            result = "Computer chose: Paper\nResult: Draw"
         else:
-            print("Bilgisayarın seçimi: makas Sonuç:Kaybettiniz")
-    if secim==makas:
-        if bil_secim==taş:
-            print("Bilgisayarın seçimi: Taş Sonuç: Kaybettiniz")
-        elif bil_secim==kağıt:
-            print("Bilgisayarın seçimi: Kağıt Sonuç: Kazandınız")
+            result = "Computer chose: Scissors\nYou lost"
+    if user_choice == scissors:
+        if computer_choice == rock:
+            result = "Computer chose: Rock\nYou lost"
+        elif computer_choice == paper:
+            result = "Computer chose: Paper\nYou won"
         else:
-            print("Bilgisayarın seçimi: makas Sonuç:Berabere")
+            result = "Computer chose: Scissors\nResult: Draw"
+
+    messagebox.showinfo("Game Result", result)
+
+# GUI design
+window = tk.Tk()
+window.title("Rock Paper Scissors Game")
+
+label = tk.Label(window, text="Welcome to the Game!", font=("Arial", 16))
+label.pack(pady=10)
+
+btn_rock = tk.Button(window, text="Rock", width=20, command=lambda: play("rock"))
+btn_rock.pack(pady=5)
+
+btn_paper = tk.Button(window, text="Paper", width=20, command=lambda: play("paper"))
+btn_paper.pack(pady=5)
+
+btn_scissors = tk.Button(window, text="Scissors", width=20, command=lambda: play("scissors"))
+btn_scissors.pack(pady=5)
+
+window.mainloop()
